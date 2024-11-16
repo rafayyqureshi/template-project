@@ -2,11 +2,18 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const port = 3001;
+
+// Use environment variable for port or fallback to 3001
+const port = process.env.PORT || 3001;
 
 // Middleware
 app.use(express.json());
 app.use(cors());
+
+// Root route
+app.get('/', (req, res) => {
+    res.json({ message: 'Welcome to the API' });
+});
 
 // API Routes
 app.post('/api/helloUser', (req, res) => {
@@ -29,6 +36,17 @@ app.post('/api/checkAnswer', (req, res) => {
     
     const result = answer === (2 + 2) ? "You are Correct!!" : "That is Wrong";
     res.json({ message: result });
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ error: 'Something broke!' });
+});
+
+// Handle 404
+app.use((req, res) => {
+    res.status(404).json({ error: 'Route not found' });
 });
 
 // Start server
