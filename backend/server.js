@@ -15,8 +15,8 @@ app.get('/', (req, res) => {
     res.json({ message: 'Welcome to the API' });
 });
 
-// API Routes
-app.post('/api/helloUser', (req, res) => {
+// API Routes - removed /api prefix to match frontend
+app.post('/helloUser', (req, res) => {
     const { username } = req.body;
     
     if (!username || typeof username !== 'string') {
@@ -27,7 +27,7 @@ app.post('/api/helloUser', (req, res) => {
     res.json({ message: greeting });
 });
 
-app.post('/api/checkAnswer', (req, res) => {
+app.post('/checkAnswer', (req, res) => {
     const { answer } = req.body;
     
     if (answer === undefined || typeof answer !== 'number') {
